@@ -7,7 +7,7 @@ const PizzaForm = props => {
 
     return (
         <div>
-            <p>DOes not refresh when i hit save on this component</p>
+            <h1>TL said to submit it and put 1 for the score, i need to complete it before MOnday</h1>
         </div>
     )
 }
