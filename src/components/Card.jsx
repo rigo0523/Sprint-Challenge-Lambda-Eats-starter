@@ -14,7 +14,7 @@ const formSchema = yup.object().shape({
     peperonni: yup.boolean(),
     sausage: yup.boolean(),
     onion: yup.boolean(),
-    instruction: yup.string().min(25, "please type at least more than 5 worlds").required("must include why you'd like to join")
+    instruction: yup.string().min(10, "please type at least 10 characters").required("must include why you'd like to join")
   });
 
 
@@ -29,7 +29,7 @@ const Card = () => {
         instruction: ""
     });
 
-    const [errors, setErrors] = useState({
+    const [error, setError] = useState({
         name: "",
         size: "",
         jalapeno: false,
@@ -50,15 +50,15 @@ const Card = () => {
           .reach(formSchema, e.target.name)
           .validate(e.target.value)
           .then(valid => {
-            setErrors({
-              ...errors,
+            setError({
+              ...error,
               [e.target.name]: ""
             });
           })
           .catch(err => {
-              console.log(err, 'errros')
-            setErrors({
-              ...errors,
+              console.log(err, 'errrorrrrs')
+            setError({
+              ...error,
               [e.target.name]: err.errors[0]
             });
           });
@@ -112,22 +112,22 @@ const Card = () => {
 
     return (
         <Container>
-           <form onSubmit={formSubmit}>
+           <form onSubmit={formSubmit} data-cy='submit'>
             <Wrapper>
                <label htmlFor="name">
                    Name 
                    <br/>
-                   <input type="text" name="name" id="text" value={formState.name} onChange={inputChange}/>
+                   <input type="text" name="name" id="name" data-cy="name" value={formState.name} onChange={inputChange}/>
                </label>
                <br/>
-               {errors.name.length > 0 ? <p>{errors.name}</p> : null}
+               {error.name.length > 0 ? <p>{error.name}</p> : null}
             </Wrapper>
 
             <Wrapper>
                 <label htmlFor="size">
                      What would you like to help with?
                      <br/>
-                <select id="size" name="size" onChange={inputChange}>
+                <select id="size" name="size" data-cy="selection" onChange={inputChange}>
                     <option value="">--PLEASE SELECT A SIZE--</option>
                     <option value="Small">Small</option>
                     <option value="Medium">Medium</option>
@@ -136,38 +136,38 @@ const Card = () => {
                 </select>
                 </label>
              
-               {errors.size.length > 0 ? <p>{errors.size}</p> : null}
+               {error.size.length > 0 ? <p>{error.size}</p> : null}
             </Wrapper>
 
             {/* toppings menu */}
             <Wrapper>
                 <div className="wrap">
                     <label htmlFor="jalapeno" className="wrap">                     
-                        <input type="checkbox" name="jalapeno" checked={formState.jalapeno} onChange={handleToppings} />
+                        <input type="checkbox" data-cy="checkbox1" name="jalapeno" checked={formState.jalapeno} onChange={handleToppings} />
                         Jalapeno
                     </label>
-                    {errors.jalapeno.length > 0 ? <p>{errors.jalapeno}</p> : null}
+                    {error.jalapeno.length > 0 ? <p>{error.jalapeno}</p> : null}
                 </div>
                 <div className="wrap">
                     <label htmlFor="peperonni" className="wrap">                       
-                        <input type="checkbox" name="peperonni" checked={formState.peperonni} onChange={handleToppings} />
+                        <input type="checkbox" data-cy="checkbox2" name="peperonni" checked={formState.peperonni} onChange={handleToppings} />
                         Peperonni
                     </label>
-                    {errors.peperonni.length > 0 ? <p>{errors.peperonni}</p> : null}
+                    {error.peperonni.length > 0 ? <p>{error.peperonni}</p> : null}
                 </div>
                 <div className="wrap">
                     <label htmlFor="sausage" className="wrap">    
-                        <input type="checkbox" name="sausage" checked={formState.sausage} onChange={handleToppings} />
+                        <input type="checkbox" data-cy="checkbox3" name="sausage" checked={formState.sausage} onChange={handleToppings} />
                         Sausage
                     </label>
-                    {errors.sausage.length > 0 ? <p>{errors.sausage}</p> : null}
+                    {error.sausage.length > 0 ? <p>{error.sausage}</p> : null}
                 </div>
                 <div className="wrap">
                     <label htmlFor="onion" className="wrap">              
-                        <input type="checkbox" name="onion" checked={formState.onion} onChange={handleToppings} />
+                        <input type="checkbox" data-cy="checkbox4" name="onion" checked={formState.onion} onChange={handleToppings} />
                         Onion
                     </label>
-                    {errors.onion.length > 0 ? <p>{errors.onion}</p> : null}
+                    {error.onion.length > 0 ? <p>{error.onion}</p> : null}
                 </div>
             </Wrapper>
 
@@ -176,7 +176,7 @@ const Card = () => {
                 Instructions <br/>
                 <textarea name="instruction" id="instruction" placeholder="special instructions" value={formState.instruction} onChange={inputChange} />
             </label>
-            {errors.instruction.length > 0 ? <p>{errors.instruction}</p> : null}
+            {error.instruction.length > 0 ? <p>{error.instruction}</p> : null}
             </Wrapper>
 
             <pre>{JSON.stringify(post, null, 2)}</pre>
